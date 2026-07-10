@@ -1,6 +1,7 @@
 torch
 torchvision
-gradio
+gradio==5.0.0
+huggingface_hub<1.0
 certifi
 tqdm
 numpy

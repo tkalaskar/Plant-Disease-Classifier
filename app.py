@@ -19,7 +19,15 @@ from plant_disease_classifier.models import build_model
 
 DEFAULT_MODEL_PATH = PROJECT_ROOT / "models" / "best_model.pth"
 MODEL_PATH = Path(os.getenv("MODEL_PATH", str(DEFAULT_MODEL_PATH)))
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+def choose_device() -> torch.device:
+    if os.getenv("USE_CUDA", "0") != "1":
+        return torch.device("cpu")
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+DEVICE = choose_device()
 
 
 def load_checkpoint(path: Path) -> dict:
