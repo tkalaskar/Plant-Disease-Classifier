@@ -1,0 +1,15 @@
+torch
+torchvision
+gradio
+certifi
+tqdm
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+Pillow
+PyYAML
+kagglehub
+streamlit
+grad-cam

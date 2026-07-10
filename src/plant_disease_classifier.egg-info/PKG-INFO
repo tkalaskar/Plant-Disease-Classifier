@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: plant-disease-classifier
+Version: 0.1.0
+Summary: Plant leaf disease classification with PyTorch transfer learning.
+Requires-Python: >=3.10
