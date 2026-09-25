@@ -14,6 +14,8 @@ pinned: false
 
 An end-to-end computer vision project that identifies plant leaf diseases from images using transfer learning in PyTorch. The project uses an ImageNet-pretrained EfficientNet-B0 model, a reproducible PlantVillage training pipeline, evaluation reports, Grad-CAM explainability, and a Streamlit interface for local prediction.
 
+**Result:** Achieved **96.94% accuracy on a held-out PlantVillage test set of 4,345 images**, with **95.96% macro F1**. Best validation accuracy was **97.15% at epoch 9**. These results measure performance on PlantVillage's controlled images; accuracy on real field photos has not been established.
+
 ## Problem Statement
 
 Plant diseases can reduce crop quality and yield if symptoms are not identified early. Manual inspection can be slow, inconsistent, and difficult to scale. This project explores whether a transfer learning based CNN can classify plant leaf diseases from images and provide interpretable visual feedback about the regions used for prediction.
@@ -209,11 +211,23 @@ reports/figures/grad_cam/
 
 ## Results
 
-Current test set size: `4,345` images.
+The model correctly classified **4,212 of 4,345 held-out test images**, giving **96.94% test accuracy**. Accuracy is the number of correct predictions divided by the total number of labeled images evaluated.
+
+The best checkpoint was selected by validation accuracy (**97.15% at epoch 9**). Test accuracy is reported separately to assess the selected model on the held-out test split.
 
 | Model | Training Strategy | Val Accuracy | Test Accuracy | Macro Precision | Macro Recall | Macro F1 | Weighted F1 |
 |---|---|---:|---:|---:|---:|---:|---:|
 | EfficientNet-B0 | 5 frozen-head epochs + last 2 blocks fine-tuned | 97.15% | 96.94% | 96.48% | 95.63% | 95.96% | 96.91% |
+
+### Where Accuracy Is Reported
+
+- `models/training_log.csv`: training and validation accuracy for each epoch (`train_acc` and `val_acc`, stored as fractions). Generated locally during training.
+- `reports/test_predictions.csv`: per-image test predictions and `is_correct` values used to calculate overall test accuracy.
+- `reports/classification_report.csv`: per-class precision, recall, F1, and support; macro F1 gives each class equal weight, which helps assess performance when class sizes differ.
+
+The app's **confidence score** is the model's softmax score for one prediction. It is not test accuracy or a guarantee that the uploaded image was classified correctly; confidence can be high even for an incorrect prediction.
+
+These metrics describe the evaluated PlantVillage split, not field performance. An independent test set of real agricultural photos is needed to measure generalization beyond controlled backgrounds.
 
 Most confused class pairs:
 
